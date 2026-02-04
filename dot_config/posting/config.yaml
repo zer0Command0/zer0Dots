@@ -1,0 +1,12 @@
+theme: galaxy
+layout: horizontal
+animation: none
+editor: nvim
+use_host_environment: false
+response:
+  prettify_json: true
+heading:
+  visible: true
+  show_host: true
+collection_browser:
+  position: left
