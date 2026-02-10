@@ -1,0 +1,275 @@
+# ╔══════════════════════════════════════════════════════════╗
+# ║  SketchyBar Config - Zer0Dots                          ║
+# ║  Split bar with fake notch + AeroSpace integration      ║
+# ╚══════════════════════════════════════════════════════════╝
+
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+
+# -----------------------------------------------------------
+# Colors
+# -----------------------------------------------------------
+BAR_COLOR=0xE01a1a2e
+NOTCH_COLOR=0xFF000000
+ACCENT=0xFFc9a0ff
+WHITE=0xFFffffff
+WHITE_DIM=0x99ffffff
+WHITE_FAINT=0x55ffffff
+GREEN=0xFF9ee880
+RED=0xFFff8a94
+YELLOW=0xFFffd96a
+CYAN=0xFF6ee0eb
+SPOTIFY_GREEN=0xFF1DB954
+
+# -----------------------------------------------------------
+# Bar Appearance
+# -----------------------------------------------------------
+sketchybar --bar \
+  position=top \
+  height=36 \
+  blur_radius=30 \
+  color=$BAR_COLOR \
+  corner_radius=0 \
+  border_width=0 \
+  margin=0 \
+  padding_left=12 \
+  padding_right=12 \
+  y_offset=0 \
+  shadow=off \
+  topmost=off
+
+# -----------------------------------------------------------
+# Defaults
+# -----------------------------------------------------------
+default=(
+  padding_left=4
+  padding_right=4
+  icon.font="Hack Nerd Font:Bold:14.0"
+  label.font="SF Pro:Semibold:13.0"
+  icon.color=$WHITE
+  label.color=$WHITE_DIM
+  icon.padding_left=4
+  icon.padding_right=4
+  label.padding_left=4
+  label.padding_right=4
+  background.corner_radius=8
+  background.height=28
+  updates=on
+)
+sketchybar --default "${default[@]}"
+
+# ═══════════════════════════════════════════════════════════
+# LEFT SIDE - Workspaces + Front App
+# ═══════════════════════════════════════════════════════════
+
+# AeroSpace events
+sketchybar --add event aerospace_workspace_change
+sketchybar --add event aerospace_monitor_change
+
+# Workspace items
+for sid in $(aerospace list-workspaces --all); do
+  sketchybar --add item space.$sid left \
+    --subscribe space.$sid aerospace_workspace_change \
+    --set space.$sid \
+    display="$(
+      v=$(aerospace list-windows --workspace "$sid" --format "%{monitor-appkit-nsscreen-screens-id}" | cut -c1)
+      echo "${v:-1}"
+    )" \
+    drawing=off \
+    background.color=0x33ffffff \
+    background.corner_radius=6 \
+    background.drawing=on \
+    background.border_color=$ACCENT \
+    background.border_width=0 \
+    background.height=24 \
+    icon="$sid" \
+    icon.font="SF Pro:Bold:13.0" \
+    icon.padding_left=8 \
+    icon.padding_right=2 \
+    icon.color=$WHITE_DIM \
+    label.font="sketchybar-app-font:Regular:14.0" \
+    label.padding_right=10 \
+    label.padding_left=2 \
+    label.y_offset=-1 \
+    label.color=$WHITE_FAINT \
+    click_script="aerospace workspace $sid" \
+    script="$CONFIG_DIR/plugins/aerospace.sh $sid"
+done
+
+# Load workspace icons on startup
+for mid in $(aerospace list-monitors | cut -c1); do
+  for sid in $(aerospace list-workspaces --monitor $mid --empty no); do
+    apps=$(aerospace list-windows --workspace "$sid" | awk -F'|' '{gsub(/^ *| *$/, "", $2); print $2}')
+    sketchybar --set space.$sid drawing=on
+    icon_strip=" "
+    if [ "${apps}" != "" ]; then
+      while read -r app; do
+        icon_strip+=" $($CONFIG_DIR/plugins/icon_map_fn.sh "$app")"
+      done <<<"${apps}"
+    else
+      icon_strip=""
+    fi
+    sketchybar --set space.$sid label="$icon_strip"
+  done
+done
+
+# Separator + workspace window tracker
+sketchybar --add item space_separator left \
+  --set space_separator \
+    icon="│" \
+    icon.font="SF Pro:Light:16.0" \
+    icon.color=$WHITE_FAINT \
+    icon.padding_left=6 \
+    icon.padding_right=6 \
+    label.drawing=off \
+    background.drawing=off \
+    script="$PLUGIN_DIR/space_windows.sh" \
+  --subscribe space_separator aerospace_workspace_change front_app_switched space_windows_change aerospace_monitor_change
+
+# Front app
+sketchybar --add item front_app left \
+  --set front_app \
+    icon.drawing=off \
+    label.font="SF Pro:Semibold:13.0" \
+    label.color=$WHITE \
+    script="$PLUGIN_DIR/front_app.sh" \
+  --subscribe front_app front_app_switched
+
+# ═══════════════════════════════════════════════════════════
+# CENTER - Fake Notch
+# ═══════════════════════════════════════════════════════════
+
+sketchybar --add item notch center \
+  --set notch \
+    width=200 \
+    icon.drawing=off \
+    label.drawing=off \
+    background.drawing=on \
+    background.color=$NOTCH_COLOR \
+    background.height=36 \
+    background.corner_radius=0 \
+    padding_left=0 \
+    padding_right=0
+
+# ═══════════════════════════════════════════════════════════
+# RIGHT SIDE - Info items
+# ═══════════════════════════════════════════════════════════
+
+# --- Greeting (qualcosina di simpatico) ---
+sketchybar --add item greeting right \
+  --set greeting \
+    update_freq=60 \
+    icon.font="SF Pro:Regular:14.0" \
+    icon.padding_left=0 \
+    label.font="SF Pro:Regular:12.0" \
+    label.color=$WHITE_FAINT \
+    script="$PLUGIN_DIR/greeting.sh"
+
+# --- Clock ---
+sketchybar --add item clock right \
+  --set clock \
+    update_freq=10 \
+    icon="󰥔" \
+    icon.color=$WHITE_DIM \
+    label.font="SF Mono:Semibold:12.0" \
+    label.color=$WHITE \
+    script="$PLUGIN_DIR/clock.sh"
+
+# --- Battery ---
+sketchybar --add item battery right \
+  --set battery \
+    update_freq=120 \
+    icon.color=$GREEN \
+    label.font="SF Mono:Semibold:12.0" \
+    script="$PLUGIN_DIR/battery.sh" \
+  --subscribe battery system_woke power_source_change
+
+# --- Volume ---
+sketchybar --add item volume right \
+  --set volume \
+    icon.color=$CYAN \
+    label.font="SF Mono:Semibold:12.0" \
+    script="$PLUGIN_DIR/volume.sh" \
+  --subscribe volume volume_change
+
+# --- Wi-Fi ---
+sketchybar --add item wifi right \
+  --set wifi \
+    update_freq=30 \
+    icon.color=$ACCENT \
+    icon.font="Hack Nerd Font:Bold:15.0" \
+    label.font="SF Pro:Regular:12.0" \
+    label.color=$WHITE_DIM \
+    script="$PLUGIN_DIR/wifi.sh"
+
+# --- Separator ---
+sketchybar --add item sep_right right \
+  --set sep_right \
+    icon="│" \
+    icon.font="SF Pro:Light:16.0" \
+    icon.color=$WHITE_FAINT \
+    icon.padding_left=2 \
+    icon.padding_right=2 \
+    label.drawing=off \
+    background.drawing=off
+
+# --- CPU ---
+sketchybar --add item cpu right \
+  --set cpu \
+    update_freq=5 \
+    icon="󰻠" \
+    icon.color=$YELLOW \
+    label.font="SF Mono:Semibold:12.0" \
+    label.color=$WHITE_DIM \
+    script="$PLUGIN_DIR/cpu.sh"
+
+# --- RAM ---
+sketchybar --add item ram right \
+  --set ram \
+    update_freq=10 \
+    icon="󰍛" \
+    icon.color=$RED \
+    label.font="SF Mono:Semibold:12.0" \
+    label.color=$WHITE_DIM \
+    script="$PLUGIN_DIR/ram.sh"
+
+# --- Swap (keep as subtle indicator) ---
+sketchybar --add item swap right \
+  --set swap \
+    update_freq=20 \
+    icon="" \
+    icon.font="Hack Nerd Font:Bold:12.0" \
+    label.font="SF Mono:Regular:11.0" \
+    icon.color=$WHITE_FAINT \
+    label.color=$WHITE_FAINT \
+    script="$PLUGIN_DIR/memswap.sh"
+
+# --- Separator ---
+sketchybar --add item sep_right2 right \
+  --set sep_right2 \
+    icon="│" \
+    icon.font="SF Pro:Light:16.0" \
+    icon.color=$WHITE_FAINT \
+    icon.padding_left=2 \
+    icon.padding_right=2 \
+    label.drawing=off \
+    background.drawing=off
+
+# --- Spotify ---
+sketchybar --add item spotify right \
+  --set spotify \
+    update_freq=5 \
+    icon="󰓇" \
+    icon.color=$SPOTIFY_GREEN \
+    icon.font="Hack Nerd Font:Bold:16.0" \
+    label.font="SF Pro:Regular:12.0" \
+    label.color=$WHITE_DIM \
+    label.max_chars=40 \
+    drawing=off \
+    script="$PLUGIN_DIR/spotify.sh"
+
+# ═══════════════════════════════════════════════════════════
+# Brackets (split bar visual)
+# ═══════════════════════════════════════════════════════════
+
+# Force all scripts to run
+sketchybar --update

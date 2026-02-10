@@ -1,0 +1,369 @@
+# ╔══════════════════════════════════════════════════════════╗
+# ║  AeroSpace Configuration - zer0                        ║
+# ║  Hyper Key (Caps Lock) = cmd+ctrl+alt+shift            ║
+# ║  Monitor: Sotto = codice | Sopra = app desktop          ║
+# ╚══════════════════════════════════════════════════════════╝
+
+# -----------------------------------------------------------
+# Generale
+# -----------------------------------------------------------
+start-at-login = true
+after-login-command = []
+after-startup-command = []
+
+# Normalizzazione finestre (forza le finestre in tiling)
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+# Accordion layout: dimensione padding
+accordion-padding = 30
+
+# Layout di default per i nuovi workspace
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+
+# Mouse segue il focus
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+on-focus-changed = ['move-mouse window-lazy-center']
+
+# -----------------------------------------------------------
+# Gap e Margini
+# -----------------------------------------------------------
+[gaps]
+inner.horizontal = 12
+inner.vertical = 12
+outer.left = 12
+outer.right = 12
+outer.top = 12
+outer.bottom = 12
+
+# -----------------------------------------------------------
+# Workspace → Monitor Assignment
+# Monitor sotto (main) = workspace 1-5 (codice/dev)
+# Monitor sopra (secondary) = workspace 6-0 (app/comunicazione)
+# -----------------------------------------------------------
+[workspace-to-monitor-force-assignment]
+1 = 'main'
+2 = 'main'
+3 = 'main'
+4 = 'main'
+5 = 'main'
+6 = 'secondary'
+7 = 'secondary'
+8 = 'secondary'
+9 = 'secondary'
+0 = 'secondary'
+
+# -----------------------------------------------------------
+# App → Workspace Auto-binding
+# -----------------------------------------------------------
+# MONITOR SOTTO (codice)
+# 1 = Terminale principale
+# 2 = IDE / Editor
+# 3 = Progetto secondario / aux
+# 4 = Tool dev (Postman)
+# 5 = Extra / misc dev
+
+# MONITOR SOPRA (app desktop)
+# 6 = Browser
+# 7 = Comunicazione (Slack, WhatsApp)
+# 8 = Note & Knowledge (Obsidian, Claude)
+# 9 = Media (Spotify)
+# 0 = Meeting (Zoom)
+
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'com.googlecode.iterm2'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'com.jetbrains.gateway'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.jetbrains.PhpStorm'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.jetbrains.toolbox'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Preview'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.postmanlabs.mac'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+run = 'move-node-to-workspace 6'
+
+[[on-window-detected]]
+if.app-id = 'com.operasoftware.Opera'
+run = 'move-node-to-workspace 6'
+
+[[on-window-detected]]
+if.app-id = 'com.operasoftware.OperaGX'
+run = 'move-node-to-workspace 6'
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = 'move-node-to-workspace 7'
+
+[[on-window-detected]]
+if.app-id = 'net.whatsapp.WhatsApp'
+run = 'move-node-to-workspace 7'
+
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = 'move-node-to-workspace 8'
+
+[[on-window-detected]]
+if.app-id = 'com.anthropic.claudefordesktop'
+run = 'move-node-to-workspace 8'
+
+[[on-window-detected]]
+if.app-id = 'com.spotify.client'
+run = 'move-node-to-workspace 9'
+
+[[on-window-detected]]
+if.app-id = 'us.zoom.xos'
+run = 'move-node-to-workspace 0'
+
+# -----------------------------------------------------------
+# Floating Apps (utility e system)
+# -----------------------------------------------------------
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.SystemPreferences'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.calculator'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.ActivityMonitor'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.bitwarden.desktop'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.window-title-regex-substring = 'Bitwarden'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'org.pqrs.Karabiner-Elements.Settings'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'org.pqrs.Karabiner-EventViewer'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.logitech.manager'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.logi.optionsplus'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'BuhoCleaner'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Maccy'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Caffeine'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Tailscale'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'balenaEtcher'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'SD Card Formatter'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Authy'
+run = 'layout floating'
+
+# -----------------------------------------------------------
+# MAIN MODE - Keybindings
+# Hyper = cmd+ctrl+alt+shift (via Caps Lock + Karabiner)
+# -----------------------------------------------------------
+[mode.main.binding]
+
+# ┌─────────────────────────────┐
+# │  Navigazione Focus (frecce)│
+# └─────────────────────────────┘
+cmd-ctrl-alt-shift-left = 'focus left'
+cmd-ctrl-alt-shift-down = 'focus down'
+cmd-ctrl-alt-shift-up = 'focus up'
+cmd-ctrl-alt-shift-right = 'focus right'
+
+# ┌─────────────────────────────┐
+# │  Switch Workspace (1-0)    │
+# └─────────────────────────────┘
+cmd-ctrl-alt-shift-1 = 'workspace 1'
+cmd-ctrl-alt-shift-2 = 'workspace 2'
+cmd-ctrl-alt-shift-3 = 'workspace 3'
+cmd-ctrl-alt-shift-4 = 'workspace 4'
+cmd-ctrl-alt-shift-5 = 'workspace 5'
+cmd-ctrl-alt-shift-6 = 'workspace 6'
+cmd-ctrl-alt-shift-7 = 'workspace 7'
+cmd-ctrl-alt-shift-8 = 'workspace 8'
+cmd-ctrl-alt-shift-9 = 'workspace 9'
+cmd-ctrl-alt-shift-0 = 'workspace 0'
+
+# ┌─────────────────────────────┐
+# │  Layout & Window Controls  │
+# └─────────────────────────────┘
+cmd-ctrl-alt-shift-f = 'fullscreen'
+cmd-ctrl-alt-shift-t = 'layout floating tiling'
+cmd-ctrl-alt-shift-space = 'layout tiles horizontal vertical'
+cmd-ctrl-alt-shift-a = 'layout accordion horizontal vertical'
+cmd-ctrl-alt-shift-e = 'balance-sizes'
+
+# ┌─────────────────────────────┐
+# │  Focus Monitor              │
+# └─────────────────────────────┘
+cmd-ctrl-alt-shift-tab = 'focus-monitor --wrap-around next'
+cmd-ctrl-alt-shift-backtick = 'workspace-back-and-forth'
+
+# ┌─────────────────────────────┐
+# │  Lancia Terminale           │
+# └─────────────────────────────┘
+cmd-ctrl-alt-shift-enter = 'exec-and-forget open -a iTerm'
+
+# ┌─────────────────────────────┐
+# │  Entra in modalita' Move    │
+# └─────────────────────────────┘
+cmd-ctrl-alt-shift-m = 'mode move'
+
+# ┌─────────────────────────────┐
+# │  Entra in modalita' Resize  │
+# └─────────────────────────────┘
+cmd-ctrl-alt-shift-r = 'mode resize'
+
+# ┌─────────────────────────────┐
+# │  Entra in modalita' Service │
+# └─────────────────────────────┘
+cmd-ctrl-alt-shift-semicolon = 'mode service'
+
+# ┌─────────────────────────────┐
+# │  Cheat Sheet Overlay        │
+# └─────────────────────────────┘
+cmd-ctrl-alt-shift-slash = 'exec-and-forget ~/.config/aerospace/toggle-cheatsheet.sh'
+alt-slash = 'exec-and-forget ~/.config/aerospace/toggle-cheatsheet.sh'
+
+# -----------------------------------------------------------
+# MOVE MODE - Sposta finestre
+# Hyper+M per entrare, Esc per uscire
+# -----------------------------------------------------------
+[mode.move.binding]
+# Sposta finestra nella direzione
+left = 'move left'
+down = 'move down'
+up = 'move up'
+right = 'move right'
+
+# Sposta finestra nel workspace (e rimani in move mode)
+1 = ['move-node-to-workspace 1', 'mode main']
+2 = ['move-node-to-workspace 2', 'mode main']
+3 = ['move-node-to-workspace 3', 'mode main']
+4 = ['move-node-to-workspace 4', 'mode main']
+5 = ['move-node-to-workspace 5', 'mode main']
+6 = ['move-node-to-workspace 6', 'mode main']
+7 = ['move-node-to-workspace 7', 'mode main']
+8 = ['move-node-to-workspace 8', 'mode main']
+9 = ['move-node-to-workspace 9', 'mode main']
+0 = ['move-node-to-workspace 0', 'mode main']
+
+# Sposta finestra al workspace E segui
+shift-1 = ['move-node-to-workspace 1', 'workspace 1', 'mode main']
+shift-2 = ['move-node-to-workspace 2', 'workspace 2', 'mode main']
+shift-3 = ['move-node-to-workspace 3', 'workspace 3', 'mode main']
+shift-4 = ['move-node-to-workspace 4', 'workspace 4', 'mode main']
+shift-5 = ['move-node-to-workspace 5', 'workspace 5', 'mode main']
+shift-6 = ['move-node-to-workspace 6', 'workspace 6', 'mode main']
+shift-7 = ['move-node-to-workspace 7', 'workspace 7', 'mode main']
+shift-8 = ['move-node-to-workspace 8', 'workspace 8', 'mode main']
+shift-9 = ['move-node-to-workspace 9', 'workspace 9', 'mode main']
+shift-0 = ['move-node-to-workspace 0', 'workspace 0', 'mode main']
+
+# Sposta al monitor opposto
+tab = ['move-node-to-monitor --wrap-around next', 'mode main']
+
+# Swap (scambia posizione con finestra adiacente)
+shift-left = 'swap left'
+shift-down = 'swap down'
+shift-up = 'swap up'
+shift-right = 'swap right'
+
+# Join with (annida finestra)
+ctrl-left = 'join-with left'
+ctrl-down = 'join-with down'
+ctrl-up = 'join-with up'
+ctrl-right = 'join-with right'
+
+# Esci da move mode
+esc = 'mode main'
+enter = 'mode main'
+
+# -----------------------------------------------------------
+# RESIZE MODE - Ridimensiona finestre
+# Hyper+R per entrare, Esc per uscire
+# -----------------------------------------------------------
+[mode.resize.binding]
+# Ridimensiona (50px per step)
+left = 'resize width -50'
+down = 'resize height +50'
+up = 'resize height -50'
+right = 'resize width +50'
+
+# Ridimensiona fine (10px per step)
+shift-left = 'resize width -10'
+shift-down = 'resize height +10'
+shift-up = 'resize height -10'
+shift-right = 'resize width +10'
+
+# Bilancia dimensioni
+e = ['balance-sizes', 'mode main']
+
+# Esci da resize mode
+esc = 'mode main'
+enter = 'mode main'
+
+# -----------------------------------------------------------
+# SERVICE MODE - Manutenzione
+# Hyper+; per entrare, Esc per uscire
+# -----------------------------------------------------------
+[mode.service.binding]
+r = ['reload-config', 'mode main']
+f = ['flatten-workspace-tree', 'mode main']
+q = ['close-all-windows-but-current', 'mode main']
+
+esc = 'mode main'

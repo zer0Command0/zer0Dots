@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.85);
+    padding: 32px 40px;
+    -webkit-font-smoothing: antialiased;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  h1 {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .section {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 18px 20px;
+  }
+  .section.full {
+    grid-column: 1 / -1;
+  }
+  .section h2 {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .section h2.nav { color: #7ac4ff; }
+  .section h2.ws { color: #c9a0ff; }
+  .section h2.layout { color: #ffd96a; }
+  .section h2.move { color: #ff8a94; }
+  .section h2.resize { color: #6ee0eb; }
+  .section h2.service { color: #9ee880; }
+  .section h2.apps { color: #e8b46a; }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  .key {
+    font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 500;
+    font-size: 12.5px;
+    white-space: nowrap;
+    min-width: 160px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 8px;
+    border-radius: 6px;
+  }
+  .desc {
+    color: rgba(255, 255, 255, 0.6);
+    text-align: right;
+    font-size: 12.5px;
+  }
+  .mode-badge {
+    display: inline-block;
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 6px;
+    letter-spacing: 1px;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+  .badge-move { background: rgba(255, 120, 130, 0.12); color: rgba(255, 120, 130, 0.9); }
+  .badge-resize { background: rgba(100, 210, 220, 0.12); color: rgba(100, 210, 220, 0.9); }
+  .badge-service { background: rgba(140, 220, 120, 0.12); color: rgba(140, 220, 120, 0.9); }
+  .hint {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 1px;
+  }
+  .hint kbd {
+    color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 11px;
+  }
+  .ws-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 20px;
+  }
+  .ws-grid .row { font-size: 12.5px; }
+  .monitor-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    padding: 4px 0 2px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Zer0Dots</h1>
+
+<div class="grid">
+
+  <!-- NAVIGAZIONE -->
+  <div class="section">
+    <h2 class="nav">Navigazione</h2>
+    <div class="row"><span class="key">Hyper + arrows</span><span class="desc">Focus direzione</span></div>
+    <div class="row"><span class="key">Hyper + Tab</span><span class="desc">Focus monitor opposto</span></div>
+    <div class="row"><span class="key">Hyper + `</span><span class="desc">Ultimo workspace</span></div>
+    <div class="row"><span class="key">Hyper + Enter</span><span class="desc">Nuovo iTerm</span></div>
+  </div>
+
+  <!-- LAYOUT -->
+  <div class="section">
+    <h2 class="layout">Layout & Finestre</h2>
+    <div class="row"><span class="key">Hyper + F</span><span class="desc">Fullscreen</span></div>
+    <div class="row"><span class="key">Hyper + T</span><span class="desc">Float / Tile</span></div>
+    <div class="row"><span class="key">Hyper + Space</span><span class="desc">Cicla tiles H/V</span></div>
+    <div class="row"><span class="key">Hyper + A</span><span class="desc">Accordion H/V</span></div>
+    <div class="row"><span class="key">Hyper + E</span><span class="desc">Bilancia dimensioni</span></div>
+  </div>
+
+  <!-- WORKSPACE -->
+  <div class="section full">
+    <h2 class="ws">Workspace &nbsp; <span style="font-weight:400; font-size:10px; color:rgba(255,255,255,0.4)">Hyper + numero</span></h2>
+    <div class="ws-grid">
+      <div>
+        <div class="monitor-label">Monitor sotto (codice)</div>
+        <div class="row"><span class="key">1 Terminale</span><span class="desc">Ghostty, iTerm</span></div>
+        <div class="row"><span class="key">2 IDE</span><span class="desc">PhpStorm, Gateway</span></div>
+        <div class="row"><span class="key">3 Aux</span><span class="desc">Progetto secondario</span></div>
+        <div class="row"><span class="key">4 Dev Tools</span><span class="desc">Postman</span></div>
+        <div class="row"><span class="key">5 Extra</span><span class="desc">libero</span></div>
+      </div>
+      <div>
+        <div class="monitor-label">Monitor sopra (app)</div>
+        <div class="row"><span class="key">6 Browser</span><span class="desc">Chrome, Opera</span></div>
+        <div class="row"><span class="key">7 Comunicazione</span><span class="desc">Slack, WhatsApp</span></div>
+        <div class="row"><span class="key">8 Note / AI</span><span class="desc">Obsidian, Claude</span></div>
+        <div class="row"><span class="key">9 Media</span><span class="desc">Spotify</span></div>
+        <div class="row"><span class="key">0 Meeting</span><span class="desc">Zoom</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOVE MODE -->
+  <div class="section">
+    <h2 class="move">Move Mode <span class="mode-badge badge-move">Hyper+M</span></h2>
+    <div class="row"><span class="key">arrows</span><span class="desc">Sposta finestra</span></div>
+    <div class="row"><span class="key">Shift + arrows</span><span class="desc">Swap adiacente</span></div>
+    <div class="row"><span class="key">Ctrl + arrows</span><span class="desc">Join / annida</span></div>
+    <div class="row"><span class="key">1-0</span><span class="desc">Manda al workspace</span></div>
+    <div class="row"><span class="key">Shift + 1-0</span><span class="desc">Manda e segui</span></div>
+    <div class="row"><span class="key">Tab</span><span class="desc">Al monitor opposto</span></div>
+  </div>
+
+  <!-- RESIZE + SERVICE -->
+  <div class="section">
+    <h2 class="resize">Resize Mode <span class="mode-badge badge-resize">Hyper+R</span></h2>
+    <div class="row"><span class="key">arrows</span><span class="desc">Ridimensiona (50px)</span></div>
+    <div class="row"><span class="key">Shift + arrows</span><span class="desc">Fine (10px)</span></div>
+    <div class="row"><span class="key">E</span><span class="desc">Bilancia ed esci</span></div>
+    <h2 class="service" style="margin-top:10px">Service <span class="mode-badge badge-service">Hyper+;</span></h2>
+    <div class="row"><span class="key">R</span><span class="desc">Ricarica config</span></div>
+    <div class="row"><span class="key">F</span><span class="desc">Flatten tree</span></div>
+    <div class="row"><span class="key">Q</span><span class="desc">Chiudi tutto tranne 1</span></div>
+  </div>
+
+</div>
+
+<div class="hint"><kbd>Esc</kbd> o click fuori per chiudere &bull; <kbd>Hyper + /</kbd> per toggle</div>
+
+</body>
+</html>
