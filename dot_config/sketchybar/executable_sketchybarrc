@@ -9,7 +9,6 @@ PLUGIN_DIR="$CONFIG_DIR/plugins"
 # Colors
 # -----------------------------------------------------------
 BAR_COLOR=0xE01a1a2e
-NOTCH_COLOR=0xFF000000
 ACCENT=0xFFc9a0ff
 WHITE=0xFFffffff
 WHITE_DIM=0x99ffffff
@@ -133,22 +132,6 @@ sketchybar --add item front_app left \
     label.color=$WHITE \
     script="$PLUGIN_DIR/front_app.sh" \
   --subscribe front_app front_app_switched
-
-# ═══════════════════════════════════════════════════════════
-# CENTER - Fake Notch
-# ═══════════════════════════════════════════════════════════
-
-sketchybar --add item notch center \
-  --set notch \
-    width=200 \
-    icon.drawing=off \
-    label.drawing=off \
-    background.drawing=on \
-    background.color=$NOTCH_COLOR \
-    background.height=36 \
-    background.corner_radius=0 \
-    padding_left=0 \
-    padding_right=0
 
 # ═══════════════════════════════════════════════════════════
 # RIGHT SIDE - Info items

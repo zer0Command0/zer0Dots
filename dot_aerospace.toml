@@ -34,7 +34,7 @@ inner.horizontal = 12
 inner.vertical = 12
 outer.left = 12
 outer.right = 12
-outer.top = 12
+outer.top = 48
 outer.bottom = 12
 
 # -----------------------------------------------------------
