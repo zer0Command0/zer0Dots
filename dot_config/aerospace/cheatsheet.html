@@ -54,6 +54,8 @@
   .section h2.resize { color: #6ee0eb; }
   .section h2.service { color: #9ee880; }
   .section h2.apps { color: #e8b46a; }
+  .section h2.tmux { color: #a6e3a1; }
+  .badge-tmux { background: rgba(166, 227, 161, 0.12); color: rgba(166, 227, 161, 0.9); }
   .row {
     display: flex;
     justify-content: space-between;
@@ -192,6 +194,29 @@
     <div class="row"><span class="key">R</span><span class="desc">Ricarica config</span></div>
     <div class="row"><span class="key">F</span><span class="desc">Flatten tree</span></div>
     <div class="row"><span class="key">Q</span><span class="desc">Chiudi tutto tranne 1</span></div>
+  </div>
+
+  <!-- TMUX -->
+  <div class="section full">
+    <h2 class="tmux">tmux <span class="mode-badge badge-tmux">Prefix = Ctrl-A</span></h2>
+    <div class="ws-grid">
+      <div>
+        <div class="monitor-label">Split & Finestre</div>
+        <div class="row"><span class="key">prefix + |</span><span class="desc">Split verticale</span></div>
+        <div class="row"><span class="key">prefix + -</span><span class="desc">Split orizzontale</span></div>
+        <div class="row"><span class="key">prefix + c</span><span class="desc">Nuova finestra</span></div>
+        <div class="row"><span class="key">prefix + Space</span><span class="desc">Alterna ultimo window</span></div>
+        <div class="row"><span class="key">prefix + r</span><span class="desc">Ricarica config</span></div>
+      </div>
+      <div>
+        <div class="monitor-label">Navigazione & Resize</div>
+        <div class="row"><span class="key">Ctrl + h/j/k/l</span><span class="desc">Focus pane (vim)</span></div>
+        <div class="row"><span class="key">prefix + H/J/K/L</span><span class="desc">Ridimensiona pane</span></div>
+        <div class="row"><span class="key">prefix + [</span><span class="desc">Copy mode (vi)</span></div>
+        <div class="row"><span class="key">v / y</span><span class="desc">Seleziona / Copia</span></div>
+        <div class="row"><span class="key">prefix + I</span><span class="desc">Installa plugin (TPM)</span></div>
+      </div>
+    </div>
   </div>
 
 </div>
