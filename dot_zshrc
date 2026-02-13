@@ -194,3 +194,6 @@ _pt_complete() {
   fi
 }
 compdef _pt_complete pt
+
+# opencode
+export PATH=/Users/zer0/.opencode/bin:$PATH

@@ -12,7 +12,7 @@ after-login-command = []
 after-startup-command = []
 
 # Normalizzazione finestre (forza le finestre in tiling)
-enable-normalization-flatten-containers = true
+enable-normalization-flatten-containers = false
 enable-normalization-opposite-orientation-for-nested-containers = true
 
 # Accordion layout: dimensione padding
@@ -23,8 +23,8 @@ default-root-container-layout = 'tiles'
 default-root-container-orientation = 'auto'
 
 # Mouse segue il focus
-on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
-on-focus-changed = ['move-mouse window-lazy-center']
+on-focused-monitor-changed = ['exec-and-forget sketchybar --trigger aerospace_refresh']
+on-focus-changed = ['exec-and-forget sketchybar --trigger aerospace_refresh']
 
 # -----------------------------------------------------------
 # Gap e Margini
@@ -32,10 +32,10 @@ on-focus-changed = ['move-mouse window-lazy-center']
 [gaps]
 inner.horizontal = 12
 inner.vertical = 12
-outer.left = 12
-outer.right = 12
-outer.top = 48
-outer.bottom = 12
+outer.left = 10
+outer.right = 10
+outer.top = 10
+outer.bottom = 74
 
 # -----------------------------------------------------------
 # Workspace → Monitor Assignment
@@ -324,10 +324,10 @@ shift-up = 'swap up'
 shift-right = 'swap right'
 
 # Join with (annida finestra)
-ctrl-left = 'join-with left'
-ctrl-down = 'join-with down'
-ctrl-up = 'join-with up'
-ctrl-right = 'join-with right'
+alt-left = 'join-with left'
+alt-down = 'join-with down'
+alt-up = 'join-with up'
+alt-right = 'join-with right'
 
 # Esci da move mode
 esc = 'mode main'
