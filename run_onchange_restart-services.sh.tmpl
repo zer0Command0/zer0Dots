@@ -1,0 +1,17 @@
+#!/bin/bash
+# sketchybar config hash: {{ joinPath .chezmoi.homeDir ".config/sketchybar" | glob | join "\n" | sha256sum }}
+# borders config hash: {{ include "dot_config/borders/executable_bordersrc" | sha256sum }}
+# aerospace config hash: {{ include "dot_aerospace.toml" | sha256sum }}
+
+echo "Restarting services..."
+
+brew services restart sketchybar
+brew services restart borders
+
+if pgrep -x AeroSpace > /dev/null; then
+    killall AeroSpace
+    sleep 1
+fi
+open -a AeroSpace
+
+echo "Services restarted."
