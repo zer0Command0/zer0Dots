@@ -37,8 +37,9 @@ outer.right = 10
 outer.top = 10
 outer.bottom = 74
 
+{{ if not (output "sysctl" "-n" "hw.model" | trim | contains "Book") -}}
 # -----------------------------------------------------------
-# Workspace → Monitor Assignment
+# Workspace → Monitor Assignment (solo desktop multi-monitor)
 # Monitor sotto (main) = workspace 1-5 (codice/dev)
 # Monitor sopra (secondary) = workspace 6-0 (app/comunicazione)
 # -----------------------------------------------------------
@@ -54,6 +55,7 @@ outer.bottom = 74
 9 = 'secondary'
 0 = 'secondary'
 
+{{ end -}}
 # -----------------------------------------------------------
 # App → Workspace Auto-binding
 # -----------------------------------------------------------
