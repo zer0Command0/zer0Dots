@@ -1,0 +1,34 @@
+# Pacchetti essenziali per il funzionamento base del sistema
+# Se uno di questi fallisce, l'apply si blocca
+
+tap "felixkratz/formulae"
+tap "nikitabobko/tap"
+tap "olets/tap"
+
+# Shell
+brew "zsh"
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
+brew "olets/tap/zsh-abbr"
+brew "starship"
+brew "fzf"
+brew "zoxide"
+
+# Core tools
+brew "git"
+brew "chezmoi"
+brew "neovim"
+brew "coreutils"
+brew "curl"
+
+# Window management + bar
+brew "felixkratz/formulae/sketchybar"
+brew "felixkratz/formulae/borders"
+cask "nikitabobko/tap/aerospace"
+
+# Terminale + font
+cask "iterm2"
+cask "font-jetbrains-mono-nerd-font"
+
+# Keyboard
+cask "karabiner-elements"

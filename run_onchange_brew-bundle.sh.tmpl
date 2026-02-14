@@ -1,3 +1,17 @@
 #!/bin/bash
+# Brewfile core hash: {{ include "dot_Brewfile_core" | sha256sum }}
 # Brewfile hash: {{ include "dot_Brewfile" | sha256sum }}
-brew bundle --file={{ joinPath .chezmoi.homeDir ".Brewfile" | quote }} --cleanup
+
+BREWFILE_CORE={{ joinPath .chezmoi.homeDir ".Brewfile_core" | quote }}
+BREWFILE={{ joinPath .chezmoi.homeDir ".Brewfile" | quote }}
+
+# Pacchetti essenziali: se fallisce, l'apply si blocca
+echo "Installing core packages..."
+if ! brew bundle --file="$BREWFILE_CORE"; then
+    echo "ERRORE: installazione pacchetti core fallita!"
+    exit 1
+fi
+
+# Tutti gli altri pacchetti: se fallisce, continua
+echo "Installing remaining packages..."
+brew bundle --file="$BREWFILE" --cleanup || echo "ATTENZIONE: alcuni pacchetti non essenziali non sono stati installati."
