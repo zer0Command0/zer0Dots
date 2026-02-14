@@ -1,7 +1,7 @@
 #!/bin/bash
 # sketchybar config hash: {{ joinPath .chezmoi.homeDir ".config/sketchybar" | glob | join "\n" | sha256sum }}
 # borders config hash: {{ include "dot_config/borders/executable_bordersrc" | sha256sum }}
-# aerospace config hash: {{ include "dot_aerospace.toml" | sha256sum }}
+# aerospace config hash: {{ include "dot_aerospace.toml.tmpl" | sha256sum }}
 
 echo "Restarting services..."
 
