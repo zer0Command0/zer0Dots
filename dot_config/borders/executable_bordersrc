@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+borders \
+  style=round \
+  width=6.0 \
+  hidpi=on \
+  ax_focus=off \
+  active_color=0xffe48fa8 \
+  inactive_color=0xff3c3e4f \
+  background_color=0x0024273a \
+  blacklist="System Settings,Calculator,Activity Monitor"
